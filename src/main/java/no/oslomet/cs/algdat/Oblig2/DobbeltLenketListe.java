@@ -6,6 +6,7 @@ package no.oslomet.cs.algdat.Oblig2;
 
 import java.util.Comparator;
 import java.util.Iterator;
+import java.util.Objects;
 
 
 public class DobbeltLenketListe<T> implements Liste<T> {
@@ -19,14 +20,14 @@ public class DobbeltLenketListe<T> implements Liste<T> {
         private T verdi;                   // nodens verdi
         private Node<T> forrige, neste;    // pekere
 
-        private Node(T verdi, Node<T> forrige, Node<T> neste) {
+        private Node(T verdi, Node<T> forrige) {
             this.verdi = verdi;
             this.forrige = forrige;
             this.neste = neste;
         }
 
         private Node(T verdi) {
-            this(verdi, null, null);
+            this(verdi, null);
         }
     }
 
@@ -40,8 +41,24 @@ public class DobbeltLenketListe<T> implements Liste<T> {
         throw new UnsupportedOperationException();
     }
 
-    public DobbeltLenketListe(T[] a) {
-        throw new UnsupportedOperationException();
+    public DobbeltLenketListe(T[] a) {  //Lager ei dobbeltlenka liste med verdiene frå A, utan å ta med NULL-verdiar.
+        // throw new UnsupportedOperationException();
+
+        Objects.requireNonNull(a, "a kan ikkje vere null"); //Sjekker at a ikkje er null
+        hode = hale = null; // Setter hode = hale = null
+        int i = 0; //Erklærer i utenfor loopen for å kunne bruke videre
+
+        for (; i < a.length && a[i] == null; i++); //Finner fyrste noden (altså fyrste verdien i list asom ikkje er null).
+            Node<T> p = hode = new Node<>(a[i], null);
+            antall = 1; //Må huge å ha med antall
+
+        for (; i < a.length; i++) { //Looper så gjennom resten av lista
+            if (a[i] != null){
+                p = hode = new Node<>(a[i], null);
+                antall ++;
+            }
+        }
+
     }
 
     public Liste<T> subliste(int fra, int til) {
@@ -50,12 +67,14 @@ public class DobbeltLenketListe<T> implements Liste<T> {
 
     @Override
     public int antall() {
-        throw new UnsupportedOperationException();
+        // throw new UnsupportedOperationException();
+    return antall;
     }
 
     @Override
     public boolean tom() {
-        throw new UnsupportedOperationException();
+        // throw new UnsupportedOperationException();
+        return antall == 0; //Returnerer 1 hvis antall = 0, returnerer 0 hvis ikkje.
     }
 
     @Override
