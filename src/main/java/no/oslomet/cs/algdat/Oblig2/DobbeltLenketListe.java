@@ -33,14 +33,14 @@ public class DobbeltLenketListe<T> implements Liste<T> { //....
         private T verdi;                   // nodens verdi
         private Node<T> forrige, neste;    // pekere
 
-        private Node(T verdi, Node<T> forrige) {
+        private Node(T verdi, Node<T> forrige, Object o) {
             this.verdi = verdi;
             this.forrige = forrige;
             this.neste = neste;
         }
 
         private Node(T verdi) {
-            this(verdi, null);
+            this(verdi, null, null);
         }
     }
 
@@ -59,29 +59,27 @@ public class DobbeltLenketListe<T> implements Liste<T> { //....
 
         Objects.requireNonNull(a, "Tabellen a er null!"); //Sjekker at a ikkje er null
 
-        if (a.length > 0) {
-            int i = 0; //Erklærer i utenfor loopen for å kunne bruke videre
-            for (; i < a.length; i++) {//Finner fyrste noden som ikkje er null).
-                //Notat til meg sjølv:
-                // Kvifor fekk eg det ikkje til å funke med for (; i < a.length && a[i] == null; i++);???
-                if (a[i] != null) { //Looper berre gjennom "resten" av lista dersom det er funne ein verdi som er null
-                    hode = new Node<>(a[i]);
-                    antall++;
-                    hale = hode; //Halen = hode når det berre er ein node i lista.
-                    break;
-                }
-            }
+        hode = hale = null;
 
-            if (hale != null) {
-                i++;
-                for (; i < a.length; i++) { //Looper så gjennom resten av lista
-                    if (a[i] != null) {
-                        hale.neste = new Node(a[i]);
-                        hale = hale.neste;
-                        antall++;
-                    }
+        int i = 0; for (; i < a.length && a[i] == null; i++); //Finn inksen til den fyrste veriden i lista som ikkje er 0.
+
+        if (i < a.length)
+        {
+            Node<T> p = hode = new Node<>(a[i]);  // den fyrste noden
+            p.forrige = null;
+
+            antall ++;
+
+            for (i++; i < a.length; i++)
+            {
+                if (a[i] != null)
+                {
+                    p = p.neste = new Node<>(a[i]);
+                    antall++;
                 }
             }
+            hale = p; //Sett halen
+            hode.forrige = hale.neste = null;
         }
     }
 
@@ -103,7 +101,19 @@ public class DobbeltLenketListe<T> implements Liste<T> { //....
 
     @Override
     public boolean leggInn(T verdi) {
-        throw new UnsupportedOperationException();
+
+        Objects.requireNonNull(verdi, "Nullverdiar er ikkje tillatt"); //Sjekker at verdi ikkje er null.
+        if (hale == null){
+            hode = hale = new Node<>(verdi);
+            antall++;
+        }
+        else {
+            hale.neste = new Node<>(verdi);
+            hale = hale.neste;
+            antall++;
+        }
+
+        return true;
     }
 
     @Override
