@@ -7,14 +7,13 @@ Oppgaven er levert av følgende studenter:
 
 # Arbeidsfordeling
 
-I oppgaven har vi hatt følgende arbeidsfordeling:
-* Per har hatt hovedansvar for oppgave 1, 3, og 5. 
-* Else har hatt hovedansvar for oppgave 2, 4, og 6. 
-* Fatima har hatt hovedansvar for oppgave 7 og 8. 
-* Vi har i fellesskap løst oppgave 10. 
+I oppgaven har eg hatt følgende arbeidsfordeling:
+* Johan har hatt ansvar for alt :)
 
 # Oppgavebeskrivelse
 
-I oppgave 1 så gikk vi frem ved å ...
+* I oppgåve 1 loopa eg gjennom lista to gonger, 1 for å finne fyrste verdi som ikkje var 0 og 1 for å loope gjennom reste av
+verdiane og finne dei som ikkje var null. La desse så inn i den dobbeltlenkalista.
 
-I oppgave 2 så brukte vi en ... til å ...
+* I oppgåve 2 a tek eg utgangspunktet i kode frå kompendiet, og kommenterar koden undervegs. Omvendt er heilt lik tostring, berre med forrige i staden for neste.
+I 2b 

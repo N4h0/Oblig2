@@ -18,9 +18,15 @@ public class DobbeltLenketListe<T> implements Liste<T> { //....
      */
 
     public static void main(String[] args) {
-        String[] s = {"Ole", null, "Per", "Kari", null};
-        Liste<String> liste = new DobbeltLenketListe<>(s);
-        System.out.println(liste.antall() + " " + liste.tom());
+        String[] s1 = {}, s2 = {"A"}, s3 = {null,"A",null,"B",null};
+        DobbeltLenketListe<String> l1 = new DobbeltLenketListe<>(s1);
+        DobbeltLenketListe<String> l2 = new DobbeltLenketListe<>(s2);
+        DobbeltLenketListe<String> l3 = new DobbeltLenketListe<>(s3);
+
+        System.out.println(l1.toString() + " " + l2.toString()
+                + " " + l3.toString() + " " + l1.omvendtString() + " "
+                + l2.omvendtString() + " " + l3.omvendtString());
+        System.out.println("[] [A] [A, B] [] [A] [B, A]");
     }
 
     private static final class Node<T> {
@@ -44,7 +50,7 @@ public class DobbeltLenketListe<T> implements Liste<T> { //....
     private int antall;            // antall noder i listen
     private int endringer;         // antall endringer i listen
 
-    public DobbeltLenketListe() { //Tom liste
+    public DobbeltLenketListe() { //Lager ei dobbellenka liste som er tom.
         hode = hale = null;
         antall = endringer = 0;
     }
@@ -73,7 +79,8 @@ public class DobbeltLenketListe<T> implements Liste<T> { //....
                 i++;
                 for (; i < a.length; i++) { //Looper så gjennom resten av lista
                     if (a[i] != null) {
-                        hale.neste = new Node(a[i], null);
+                        hale.neste = new Node(a[i]);
+                        System.out.println(a[i]);
                         hale = hale.neste;
                         antall++;
                     }
@@ -145,11 +152,51 @@ public class DobbeltLenketListe<T> implements Liste<T> { //....
 
     @Override
     public String toString() {
-        throw new UnsupportedOperationException();
+        {
+            StringBuilder s = new StringBuilder();
+            s.append('[');
+
+            if (!tom()) { //Hvis den dobbeltlenkalista ikke er tom (spesifisert av listeinterfase) skjer følgande:
+                Node<T> p = hode;  //Sett peikar til hodet.
+                s.append(p.verdi); //Legg til verdien til hovudet.
+
+                p = p.neste; //Flytter så peikar til neste.
+
+                while (p != null)  // Fortsetter fram til enden av lista (altså der p-neste = hale.neste = 0.
+                {
+                    s.append(',').append(' ').append(p.verdi);  // Legg til formatering og så neste verdi.
+                    p = p.neste; // Flytter peikar.
+                }
+            }
+
+            s.append(']');
+
+            return s.toString();
+        }
     }
 
+
     public String omvendtString() {
-        throw new UnsupportedOperationException();
+        {
+            StringBuilder s = new StringBuilder();
+            s.append('[');
+
+            if (!tom()) { //Hvis den dobbeltlenkalista ikke er tom (spesifisert av listeinterfase) skjer følgande:
+                Node<T> p = hale;  //Sett peikar til halen.
+                s.append(p.verdi); //Legg til verdien til Stringbuilderen.
+                p = p.forrige; //Flytter så peikar til forrige.
+
+                while (p != null)  // Fortsetter fram til enden av lista (altså der p-neste = hale.neste = 0.
+                {
+                    s.append(',').append(' ').append(p.verdi);  // Legg til formatering og så forrige verdi.
+                    p = p.forrige; // Flytter peikar.
+                }
+            }
+
+            s.append(']');
+
+            return s.toString();
+        }
     }
 
     @Override
