@@ -16,4 +16,6 @@ I oppgaven har eg hatt følgende arbeidsfordeling:
 verdiane og finne dei som ikkje var null. La desse så inn i den dobbeltlenkalista.
 
 * I oppgåve 2 a tek eg utgangspunktet i kode frå kompendiet, og kommenterar koden undervegs. Omvendt er heilt lik tostring, berre med forrige i staden for neste.
-I 2b 
+I 2b lagar eg legg-inn metoden ved å bruke deler av koden frå a for dei to ulike scenarioane (legge inn fyrste verdi vs seinare verdiar).
+
+* I oppgåve 3...

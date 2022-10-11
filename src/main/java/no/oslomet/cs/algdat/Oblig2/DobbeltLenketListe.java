@@ -85,7 +85,25 @@ public class DobbeltLenketListe<T> implements Liste<T> { //....
     }
 
     public Liste<T> subliste(int fra, int til) {
-        throw new UnsupportedOperationException();
+
+        fratilKontroll(fra, til);
+
+
+        Liste<T> liste = new DobbeltLenketListe<>();
+        Node<T> p = finnNode(fra);
+        if (fra == til) {
+            return liste;
+        }
+
+        for (int i = fra; i<=til; i++){
+            liste.leggInn(p.verdi);
+            p = p.neste;
+        }
+        return liste;
+    }
+
+    private void fratilKontroll(int fra, int til) {
+        if (fra > til || fra <0) throw new IndexOutOfBoundsException();
     }
 
     @Override
@@ -112,7 +130,7 @@ public class DobbeltLenketListe<T> implements Liste<T> { //....
             hode.forrige = hale.neste = null;
             hode.neste = hale.forrige = null;
             antall++;
-            endringer ++;
+            endringer++;
         } else {
             hode.forrige = null;
             hale.neste = p;
@@ -121,7 +139,7 @@ public class DobbeltLenketListe<T> implements Liste<T> { //....
             hale = p;
 
             antall++;
-            endringer ++;
+            endringer++;
         }
 
         return true;
@@ -139,8 +157,26 @@ public class DobbeltLenketListe<T> implements Liste<T> { //....
 
     @Override
     public T hent(int indeks) {
-        throw new UnsupportedOperationException();
+
+        Node<T> p = finnNode(indeks);
+        return p.verdi;
     }
+
+    private Node<T> finnNode(int indeks) {
+
+        indeksKontroll(indeks, false);
+        Node<T> p = null;
+        if (indeks < antall / 2) {
+            p = hode;
+            for (int i = 0; i < indeks; i++) p = p.neste; //Looper gjennom til rett verdi
+        } else {
+            p = hale;
+            for (int i = 0; i < antall - indeks -1; i++) p = p.forrige; //
+        }
+        return p;
+
+    }
+
 
     @Override
     public int indeksTil(T verdi) {
@@ -149,7 +185,12 @@ public class DobbeltLenketListe<T> implements Liste<T> { //....
 
     @Override
     public T oppdater(int indeks, T nyverdi) {
-        throw new UnsupportedOperationException();
+        Objects.requireNonNull(nyverdi);
+        Node<T> p = finnNode(indeks);
+        T gammelVerdi = p.verdi;
+        p.verdi = nyverdi;
+        endringer ++;
+        return gammelVerdi;
     }
 
     @Override
@@ -258,5 +299,6 @@ public class DobbeltLenketListe<T> implements Liste<T> { //....
     public static <T> void sorter(Liste<T> liste, Comparator<? super T> c) {
         throw new UnsupportedOperationException();
     }
+
 
 } // class DobbeltLenketListe
