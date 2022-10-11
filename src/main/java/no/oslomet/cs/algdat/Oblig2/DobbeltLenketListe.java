@@ -18,7 +18,7 @@ public class DobbeltLenketListe<T> implements Liste<T> { //....
      */
 
     public static void main(String[] args) {
-        String[] s1 = {}, s2 = {"A"}, s3 = {null,"A",null,"B",null};
+        String[] s1 = {}, s2 = {"A"}, s3 = {null, "A", null, "B", null};
         DobbeltLenketListe<String> l1 = new DobbeltLenketListe<>(s1);
         DobbeltLenketListe<String> l2 = new DobbeltLenketListe<>(s2);
         DobbeltLenketListe<String> l3 = new DobbeltLenketListe<>(s3);
@@ -61,21 +61,22 @@ public class DobbeltLenketListe<T> implements Liste<T> { //....
 
         hode = hale = null;
 
-        int i = 0; for (; i < a.length && a[i] == null; i++); //Finn inksen til den fyrste veriden i lista som ikkje er 0.
+        int i = 0;
+        for (; i < a.length && a[i] == null; i++) ; //Finn inksen til den fyrste veriden i lista som ikkje er 0.
 
-        if (i < a.length)
-        {
+        if (i < a.length) {
             Node<T> p = hode = new Node<>(a[i]);  // den fyrste noden
             p.forrige = null;
 
-            antall ++;
+            antall++;
 
-            for (i++; i < a.length; i++)
-            {
-                if (a[i] != null)
-                {
+            for (i++; i < a.length; i++) {
+                if (a[i] != null) {
+                    Node<T> q = p;
                     p = p.neste = new Node<>(a[i]);
+                    p.forrige = q;
                     antall++;
+
                 }
             }
             hale = p; //Sett halen
@@ -103,11 +104,10 @@ public class DobbeltLenketListe<T> implements Liste<T> { //....
     public boolean leggInn(T verdi) {
 
         Objects.requireNonNull(verdi, "Nullverdiar er ikkje tillatt"); //Sjekker at verdi ikkje er null.
-        if (hale == null){
+        if (hale == null) {
             hode = hale = new Node<>(verdi);
             antall++;
-        }
-        else {
+        } else {
             hale.neste = new Node<>(verdi);
             hale = hale.neste;
             antall++;
@@ -159,21 +159,21 @@ public class DobbeltLenketListe<T> implements Liste<T> { //....
     @Override
     public String toString() {
 
-            StringBuilder s = new StringBuilder();
-            s.append('[');
+        StringBuilder s = new StringBuilder();
+        s.append('[');
 
-            if (!tom()) { //Hvis den dobbeltlenkalista ikke er tom (spesifisert av listeinterfase) skjer følgande:
-                Node<T> p = hode;  //Sett peikar til hodet.
-                s.append(p.verdi); //Legg til verdien til hovudet.
+        if (!tom()) { //Hvis den dobbeltlenkalista ikke er tom (spesifisert av listeinterfase) skjer følgande:
+            Node<T> p = hode;  //Sett peikar til hodet.
+            s.append(p.verdi); //Legg til verdien til hovudet.
 
-                p = p.neste; //Flytter så peikar til neste.
+            p = p.neste; //Flytter så peikar til neste.
 
-                while (p != null)  // Fortsetter fram til enden av lista (altså der p-neste = hale.neste = 0.
-                {
-                    s.append(',').append(' ').append(p.verdi);  // Legg til formatering og så neste verdi.
-                    p = p.neste; // Flytter peikar.
-                }
+            while (p != null)  // Fortsetter fram til enden av lista (altså der p-neste = hale.neste = 0.
+            {
+                s.append(',').append(' ').append(p.verdi);  // Legg til formatering og så neste verdi.
+                p = p.neste; // Flytter peikar.
             }
+        }
 
         s.append(']');
         return s.toString();
@@ -193,6 +193,7 @@ public class DobbeltLenketListe<T> implements Liste<T> { //....
             while (p != null)  // Fortsetter fram til enden av lista (altså der p-neste = hale.neste = 0.
             {
                 s.append(',').append(' ').append(p.verdi);  // Legg til formatering og så neste verdi.
+
                 p = p.forrige; // Flytter peikar.
             }
         }
