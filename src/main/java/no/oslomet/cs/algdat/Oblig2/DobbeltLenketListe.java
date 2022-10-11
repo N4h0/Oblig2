@@ -18,15 +18,12 @@ public class DobbeltLenketListe<T> implements Liste<T> { //....
      */
 
     public static void main(String[] args) {
-        String[] s1 = {}, s2 = {"A"}, s3 = {null, "A", null, "B", null};
-        DobbeltLenketListe<String> l1 = new DobbeltLenketListe<>(s1);
-        DobbeltLenketListe<String> l2 = new DobbeltLenketListe<>(s2);
-        DobbeltLenketListe<String> l3 = new DobbeltLenketListe<>(s3);
-
-        System.out.println(l1.toString() + " " + l2.toString()
-                + " " + l3.toString() + " " + l1.omvendtString() + " "
-                + l2.omvendtString() + " " + l3.omvendtString());
-        System.out.println("[] [A] [A, B] [] [A] [B, A]");
+        Character[] c = {'A','B','C','D','E','F','G','H','I','J',};
+        DobbeltLenketListe<Character> liste = new DobbeltLenketListe<>(c);
+        System.out.println(liste.subliste(3,8)); // [D, E, F, G, H]
+        System.out.println(liste.subliste(5,5)); // []
+        System.out.println(liste.subliste(8,liste.antall())); // [I, J]
+// System.out.println(liste.subliste(0,11)); // skal kaste unntak
     }
 
     private static final class Node<T> {
@@ -86,24 +83,25 @@ public class DobbeltLenketListe<T> implements Liste<T> { //....
 
     public Liste<T> subliste(int fra, int til) {
 
-        fratilKontroll(fra, til);
+        fratilKontroll(fra, til); //Fratilkontroll :)
+        Liste<T> liste = new DobbeltLenketListe<>(); //Tom liste :)
 
-
-        Liste<T> liste = new DobbeltLenketListe<>();
-        Node<T> p = finnNode(fra);
         if (fra == til) {
-            return liste;
+            return liste;  //Returnere tom liste om intervallet er 0 :)
         }
 
-        for (int i = fra; i<=til; i++){
-            liste.leggInn(p.verdi);
+        Node<T> p = finnNode(fra); //Finn fyrste node!
+
+        for (int i = fra; i<til; i++){ //Looper frå fyrste node til intervallengden.
+            liste.leggInn(p.verdi);  //Legger inn neste verdi med legginnmetoden.
             p = p.neste;
         }
         return liste;
     }
 
     private void fratilKontroll(int fra, int til) {
-        if (fra > til || fra <0) throw new IndexOutOfBoundsException();
+        if (fra <0 || til <0 || til > antall) throw new IndexOutOfBoundsException();
+        if (fra > til) throw new IllegalArgumentException();
     }
 
     @Override
