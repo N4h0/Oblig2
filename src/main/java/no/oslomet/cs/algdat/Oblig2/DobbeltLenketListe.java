@@ -104,13 +104,24 @@ public class DobbeltLenketListe<T> implements Liste<T> { //....
     public boolean leggInn(T verdi) {
 
         Objects.requireNonNull(verdi, "Nullverdiar er ikkje tillatt"); //Sjekker at verdi ikkje er null.
-        if (hale == null) {
-            hode = hale = new Node<>(verdi);
+        Node<T> p = new Node<>(verdi);
+
+
+        if (antall == 0) {
+            hode = hale = p;
+            hode.forrige = hale.neste = null;
+            hode.neste = hale.forrige = null;
             antall++;
+            endringer ++;
         } else {
-            hale.neste = new Node<>(verdi);
-            hale = hale.neste;
+            hode.forrige = null;
+            hale.neste = p;
+            p.forrige = hale;
+            p.neste = null;
+            hale = p;
+
             antall++;
+            endringer ++;
         }
 
         return true;
