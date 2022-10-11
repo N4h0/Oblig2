@@ -57,12 +57,10 @@ public class DobbeltLenketListe<T> implements Liste<T> { //....
 
     public DobbeltLenketListe(T[] a) {  //Lager ei dobbeltlenka liste med verdiene frå A, utan å ta med NULL-verdiar.
 
-        hode = hale = null;
         Objects.requireNonNull(a, "Tabellen a er null!"); //Sjekker at a ikkje er null
 
         if (a.length > 0) {
             int i = 0; //Erklærer i utenfor loopen for å kunne bruke videre
-            antall = 0;
             for (; i < a.length; i++) {//Finner fyrste noden som ikkje er null).
                 //Notat til meg sjølv:
                 // Kvifor fekk eg det ikkje til å funke med for (; i < a.length && a[i] == null; i++);???
@@ -70,17 +68,15 @@ public class DobbeltLenketListe<T> implements Liste<T> { //....
                     hode = new Node<>(a[i]);
                     antall++;
                     hale = hode; //Halen = hode når det berre er ein node i lista.
-                    hode.neste = hode.forrige = hale.neste = hale.forrige = null;
                     break;
                 }
             }
 
-            if (hode != null) {
+            if (hale != null) {
                 i++;
                 for (; i < a.length; i++) { //Looper så gjennom resten av lista
                     if (a[i] != null) {
                         hale.neste = new Node(a[i]);
-                        System.out.println(a[i]);
                         hale = hale.neste;
                         antall++;
                     }
@@ -152,7 +148,7 @@ public class DobbeltLenketListe<T> implements Liste<T> { //....
 
     @Override
     public String toString() {
-        {
+
             StringBuilder s = new StringBuilder();
             s.append('[');
 
@@ -169,34 +165,31 @@ public class DobbeltLenketListe<T> implements Liste<T> { //....
                 }
             }
 
-            s.append(']');
-
-            return s.toString();
-        }
+        s.append(']');
+        return s.toString();
     }
 
 
     public String omvendtString() {
-        {
-            StringBuilder s = new StringBuilder();
-            s.append('[');
+        StringBuilder s = new StringBuilder();
+        s.append('[');
 
-            if (!tom()) { //Hvis den dobbeltlenkalista ikke er tom (spesifisert av listeinterfase) skjer følgande:
-                Node<T> p = hale;  //Sett peikar til halen.
-                s.append(p.verdi); //Legg til verdien til Stringbuilderen.
-                p = p.forrige; //Flytter så peikar til forrige.
+        if (!tom()) { //Hvis den dobbeltlenkalista ikke er tom (spesifisert av listeinterfase) skjer følgande:
+            Node<T> p = hale;  //Sett peikar til hodet.
+            s.append(p.verdi); //Legg til verdien til hovudet.
 
-                while (p != null)  // Fortsetter fram til enden av lista (altså der p-neste = hale.neste = 0.
-                {
-                    s.append(',').append(' ').append(p.verdi);  // Legg til formatering og så forrige verdi.
-                    p = p.forrige; // Flytter peikar.
-                }
+            p = p.forrige; //Flytter så peikar til neste.
+
+            while (p != null)  // Fortsetter fram til enden av lista (altså der p-neste = hale.neste = 0.
+            {
+                s.append(',').append(' ').append(p.verdi);  // Legg til formatering og så neste verdi.
+                p = p.forrige; // Flytter peikar.
             }
-
-            s.append(']');
-
-            return s.toString();
         }
+
+
+        s.append(']');
+        return s.toString();
     }
 
     @Override
