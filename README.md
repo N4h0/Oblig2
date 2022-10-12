@@ -25,6 +25,8 @@ blir sjekka ved bruk av antall-veriabelen og to if-testar med fleire or-operator
 unntak som er lagt til i metodar som blir brukt. Ellers er oppgåva berre å bruker alt ferdiglagde metodar.
 
 * Oppg 5: Løyste oppgåve ved å lage midlertidige noder for å endre neste og forrige-peikerane og å bruke leggtil-metoden eg hadde frå før.
+Hovudutfordringa med oppgåva er å legge ein node mellom. Ved å legge inn ein peiker på noden før p (den nye noden) og å ha tunga rett i munnen
+når eg legg til neste og forrige-peikarar går det fint.
 __________
 
 * Oppg 6:

@@ -154,13 +154,12 @@ public class DobbeltLenketListe<T> implements Liste<T> { //....
         } else if (indeks == antall) leggInn(verdi); //Tilfelle 3: verdi lagt bakerst
         else { //Det berykta vanskeligaste tilfelle, mellom to verdiar.
 
-            finnNode(indeks);
             Node<T> p = new Node<T>(verdi); //Noden med verdien som skal bli sett inn
-            Node<T> q = hode;
-            p.neste = q.neste;
-            q.neste = p;
-            p.forrige = q;
-            p.neste.forrige = p;
+            Node<T> q = finnNode(indeks -1); //q peiker på noden før p skal bli sett inn
+            p.neste = q.neste; //p sin neste er q sin neste
+            q.neste = p; // q sin neste er p
+            p.forrige = q; // samme med q
+            p.neste.forrige = p; // samme med q
             antall++;
             endringer++;
         }
