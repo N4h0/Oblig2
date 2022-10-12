@@ -18,7 +18,7 @@ verdiane og finne dei som ikkje var null. La desse så inn i den dobbeltlenkalis
 * Oppg. 2: Omvendt er heilt lik tostring, berre med forrige i staden for neste.
 I 2b lagar eg legg-inn metoden ved å bruke deler av koden frå a for dei to ulike scenarioane (legge inn fyrste verdi vs seinare verdiar).
 
-* Oppg 3: Oppgåve 3 bruker lager eg finnNode ved bruk av ein del kode frå tidlegare oppgåver, og tek utgangspunkt i hode elle hale for å starte leiting. Fratilkontroll 
+* Oppg 3: lager eg finnNode ved bruk av ein del kode frå tidlegare oppgåver, og tek utgangspunkt i hode elle hale for å starte leiting. Fratilkontroll 
 blir sjekka ved bruk av antall-veriabelen og to if-testar med fleire or-operatorer.
 
 * Oppg 4: merker at eg må ha ein if-test heilt i byrjinga av metoden for å hindre at unntak blir kasta for null-verdiar pga
@@ -26,7 +26,7 @@ unntak som er lagt til i metodar som blir brukt. Ellers er oppgåva veldig kort,
 allereie lagde metodar.
 
 * Oppg 5: Løyste oppgåve ved å lage midlertidige noder for å endre neste og forrige-peikerane og å bruke leggtil-metoden eg hadde frå før.
-Hovudutfordringa med oppgåva er å legge ein node mellom. Ved å legge inn ein peiker på noden før p (den nye noden) og å ha tunga rett i munnen
+Hovudutfordringa med oppgåva er å legge ein node mellom to andre nodear. Ved å legge inn ein peiker på noden før p (den nye noden) og å ha tunga rett i munnen
 når eg legg til neste og forrige-peikarar går det fint.
 
 * Oppg 6: Jobba utifrå koden frå kompendiet, men må halde tunga rett i munne for å ha oversikt over alle neste og forrige.verdiar.
@@ -36,6 +36,5 @@ I oppgåve 6 klarte eg ikkje å fjerne feilmelding frå test 6u, då eg fekk tid
 toString ved forsøk på å lese ein verdi som var null, som eg heller ikkje fekk has på.
 
 * Oppg 8: Oppg 8 følgde eg instruksane stegvis. 
-Oppgåve 8 får feil frå oppgåve 7, sidan Nullstill ikkje er koda då det ikkje er ein del av oppgåvene for grupper på 1 person.
-* I tillegg rakk eg ikkje å få fiksa feilmelding 8k.
+Oppgåve 8 får feil frå oppgåve 7, sidan Nullstill ikkje er koda då det ikkje er ein del av oppgåvene for grupper på 1 person. I tillegg rakk eg heller ikkje å få fiksa feilmelding 8k.
 
