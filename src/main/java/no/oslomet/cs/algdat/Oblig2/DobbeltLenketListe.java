@@ -155,7 +155,7 @@ public class DobbeltLenketListe<T> implements Liste<T> { //....
         else { //Det berykta vanskeligaste tilfelle, mellom to verdiar.
 
             Node<T> p = new Node<T>(verdi); //Noden med verdien som skal bli sett inn
-            Node<T> q = finnNode(indeks -1); //q peiker på noden før p skal bli sett inn
+            Node<T> q = finnNode(indeks - 1); //q peiker på noden før p skal bli sett inn
             p.neste = q.neste; //p sin neste er q sin neste
             q.neste = p; // q sin neste er p
             p.forrige = q; // samme med q
@@ -163,7 +163,7 @@ public class DobbeltLenketListe<T> implements Liste<T> { //....
             antall++;
             endringer++;
         }
-        System.out.println(toString() + antall);
+        // System.out.println(toString() + antall); Eg må diverre kommentere ut denne utskriften, den gjorde ein god jobb :'(
     }
 
     @Override
@@ -216,25 +216,7 @@ public class DobbeltLenketListe<T> implements Liste<T> { //....
 
     @Override
     public boolean fjern(T verdi) {
-        if (verdi == null) return false; //returnerer false dersom verdi == null.
-        Node<T> q = hode, p = null;
-        while (q != null) {
-            if (q.verdi.equals(verdi)) break;
-            p = q;
-            q = q.neste;
-        }
-
-        if (q == null) return false;
-        else if (q == hode) hode = hode.neste;
-        else p.neste = q.neste;
-        if (q == hale) hale = p;
-
-        q.verdi = null;
-        q.neste = null;
-
-        antall--;
-
-        return true;
+        throw new UnsupportedOperationException();
     }
 
     @Override
@@ -243,19 +225,27 @@ public class DobbeltLenketListe<T> implements Liste<T> { //....
 
         T temp;
 
-        if (indeks == 0) {
+        System.out.println(omvendtString());
+        if (indeks == 0) {  //Fjerne fyrste verdi
             temp = hode.verdi;
             hode = hode.neste;
+            hode.forrige.neste = null;
+            hode.forrige = null;
             if (antall == 1) hale = null;
-        } else {
-            Node<T> p = finnNode(indeks - 1); //Finn noden framfor den som skal fjernast.
-            Node<T> q = p.neste;
-            temp = q.verdi;
-
-            if (q == hale) hale = p;
-            p.neste = q.neste;
+        } else if (indeks == antall - 1) { //Fjerne siste verdi
+            temp = hale.verdi;
+            hale = hale.forrige;
+            hale.neste.forrige = null;
+            hale.neste = null;
+        } else { //Alle andre verdiar
+            Node<T> p = finnNode(indeks); //Finn noden som skal vekk.
+            temp = p.verdi; //Lager verdien til noden
+            Node<T> q = p.forrige;  // Noden før p.
+            q.neste = p.neste;  // Koblin frå q til å får til noden etter.
+            p.neste.forrige = q; //Samme med noden etter p, men går før.
         }
         antall--;
+        endringer++;
         return temp;
     }
 
