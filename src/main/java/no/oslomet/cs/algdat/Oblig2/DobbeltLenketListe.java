@@ -162,9 +162,10 @@ public class DobbeltLenketListe<T> implements Liste<T> { //....
             endringer ++;
         } else if (indeks == antall) leggInn(verdi); //Tilfelle 3: verdi lagt bakerst
         else { //Det berykta vanskeligaste tilfelle, mellom to verdiar.
+
+            finnNode(indeks);
             Node<T> p = new Node<T>(verdi); //Noden med verdien som skal bli sett inn
             Node<T> q = hode;
-            finnNode(indeks);
             p.neste = q.neste;
             q.neste = p;
             p.forrige = q;
@@ -172,7 +173,7 @@ public class DobbeltLenketListe<T> implements Liste<T> { //....
             antall ++;
             endringer ++;
         }
-        System.out.println(toString());
+        System.out.println(toString() + antall);
     }
 
     @Override
@@ -192,12 +193,12 @@ public class DobbeltLenketListe<T> implements Liste<T> { //....
 
         indeksKontroll(indeks, false);
         Node<T> p = null;
-        if (indeks < (antall +1) / 2) {
+        if (indeks < (antall) / 2) {
             p = hode;
             for (int i = 0; i < indeks; i++) p = p.neste; //Looper gjennom til rett verdi
         } else {
             p = hale;
-            for (int i = 0; i < antall - indeks - 1; i++) p = p.forrige; //
+            for (int i = 0; i < antall - indeks -1; i++) p = p.forrige; //
         }
         return p;
     }
@@ -224,13 +225,49 @@ public class DobbeltLenketListe<T> implements Liste<T> { //....
     }
 
     @Override
-    public boolean fjern(T verdi) {
-        throw new UnsupportedOperationException();
+    public boolean fjern(T verdi)
+    {
+        if (verdi == null) return false; //returnerer false dersom verdi == null.
+        Node<T> q = hode, p = null;
+        while (q != null)
+        {
+            if (q.verdi.equals(verdi)) break;
+            p = q; q = q.neste;
+        }
+
+        if (q == null) return false;
+        else if (q == hode) hode = hode.neste;
+        else p.neste = q.neste;
+        if (q == hale) hale = p;
+
+        q.verdi = null;
+        q.neste = null;
+
+        antall--;
+
+        return true;
     }
 
     @Override
     public T fjern(int indeks) {
-        throw new UnsupportedOperationException();
+        indeksKontroll(indeks, false);  // Kontroll
+
+        T temp;
+
+        if (indeks == 0){
+            temp = hode.verdi;
+            hode = hode.neste;
+            if (antall == 1) hale = null;
+        }else {
+            Node<T> p = finnNode(indeks -1); //Finn noden framfor den som skal fjernast.
+            Node<T> q =  p.neste;
+            temp = q.verdi;
+
+            if (q == hale) hale = p;
+            p.neste = q.neste;
+        }
+        antall --;
+        return temp;
     }
 
     @Override
