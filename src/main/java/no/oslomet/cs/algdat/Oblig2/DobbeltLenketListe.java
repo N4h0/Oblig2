@@ -18,11 +18,11 @@ public class DobbeltLenketListe<T> implements Liste<T> { //....
      */
 
     public static void main(String[] args) {
-        Character[] c = {'A','B','C','D','E','F','G','H','I','J',};
+        Character[] c = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J',};
         DobbeltLenketListe<Character> liste = new DobbeltLenketListe<>(c);
-        System.out.println(liste.subliste(3,8)); // [D, E, F, G, H]
-        System.out.println(liste.subliste(5,5)); // []
-        System.out.println(liste.subliste(8,liste.antall())); // [I, J]
+        System.out.println(liste.subliste(3, 8)); // [D, E, F, G, H]
+        System.out.println(liste.subliste(5, 5)); // []
+        System.out.println(liste.subliste(8, liste.antall())); // [I, J]
 // System.out.println(liste.subliste(0,11)); // skal kaste unntak
     }
 
@@ -92,7 +92,7 @@ public class DobbeltLenketListe<T> implements Liste<T> { //....
 
         Node<T> p = finnNode(fra); //Finn fyrste node!
 
-        for (int i = fra; i<til; i++){ //Looper frå fyrste node til intervallengden.
+        for (int i = fra; i < til; i++) { //Looper frå fyrste node til intervallengden.
             liste.leggInn(p.verdi);  //Legger inn neste verdi med legginnmetoden.
             p = p.neste;
         }
@@ -100,7 +100,7 @@ public class DobbeltLenketListe<T> implements Liste<T> { //....
     }
 
     private void fratilKontroll(int fra, int til) {
-        if (fra <0 || til <0 || til > antall) throw new IndexOutOfBoundsException();
+        if (fra < 0 || til < 0 || til > antall) throw new IndexOutOfBoundsException();
         if (fra > til) throw new IllegalArgumentException();
     }
 
@@ -122,35 +122,63 @@ public class DobbeltLenketListe<T> implements Liste<T> { //....
         Objects.requireNonNull(verdi, "Nullverdiar er ikkje tillatt"); //Sjekker at verdi ikkje er null.
         Node<T> p = new Node<>(verdi);
 
-
         if (antall == 0) {
             hode = hale = p;
             hode.forrige = hale.neste = null;
             hode.neste = hale.forrige = null;
-            antall++;
-            endringer++;
         } else {
             hode.forrige = null;
             hale.neste = p;
             p.forrige = hale;
             p.neste = null;
             hale = p;
-
-            antall++;
-            endringer++;
         }
+
+        antall ++;
+        endringer ++;
 
         return true;
     }
 
     @Override
     public void leggInn(int indeks, T verdi) {
-        throw new UnsupportedOperationException();
+
+        /*System.out.println(verdi.toString() + " " + antall + " " + indeks);
+        System.out.println(toString());
+*/
+        indeksKontroll(indeks, true);
+        Objects.requireNonNull(verdi, "Nullverdiar er ikkje tillatt"); //Sjekker at verdi ikkje er null.
+
+
+
+
+        if (antall == 0) leggInn(verdi); //Tilfelle 1: tom liste
+        else if (indeks == 0) { //Tilfelle 2: verdi lagt fremst. Veit at lista har minst ein verdi frå før, då dette er testa for tidlegare.
+            Node<T> p = new Node<T>(verdi);
+            p.neste = hode;
+            hode.forrige = p;
+            hode = p;
+            antall ++;
+            endringer ++;
+        } else if (indeks == antall) leggInn(verdi); //Tilfelle 3: verdi lagt bakerst
+        else { //Det berykta vanskeligaste tilfelle, mellom to verdiar.
+            Node<T> p = new Node<T>(verdi); //Noden med verdien som skal bli sett inn
+            Node<T> q = hode;
+            finnNode(indeks);
+            p.neste = q.neste;
+            q.neste = p;
+            p.forrige = q;
+            p.neste.forrige = p;
+            antall ++;
+            endringer ++;
+        }
+        System.out.println(toString());
     }
 
     @Override
     public boolean inneholder(T verdi) {
-        throw new UnsupportedOperationException();
+        if (indeksTil(verdi) != -1) return true;
+        return false;
     }
 
     @Override
@@ -164,21 +192,25 @@ public class DobbeltLenketListe<T> implements Liste<T> { //....
 
         indeksKontroll(indeks, false);
         Node<T> p = null;
-        if (indeks < antall / 2) {
+        if (indeks < (antall +1) / 2) {
             p = hode;
             for (int i = 0; i < indeks; i++) p = p.neste; //Looper gjennom til rett verdi
         } else {
             p = hale;
-            for (int i = 0; i < antall - indeks -1; i++) p = p.forrige; //
+            for (int i = 0; i < antall - indeks - 1; i++) p = p.forrige; //
         }
         return p;
-
     }
 
 
     @Override
     public int indeksTil(T verdi) {
-        throw new UnsupportedOperationException();
+        if (verdi == null) return -1;  //Å ha denne linja fyrst gjer at test 4i går gjennom
+        //sidan den kaster unntak i andre testar for null-verdiar, noko den ikkje skal gjere
+        for (int i = 0; i < antall; i++) {
+            if (verdi.equals(hent(i))) return i;
+        }
+        return -1;
     }
 
     @Override
@@ -187,7 +219,7 @@ public class DobbeltLenketListe<T> implements Liste<T> { //....
         Node<T> p = finnNode(indeks);
         T gammelVerdi = p.verdi;
         p.verdi = nyverdi;
-        endringer ++;
+        endringer++;
         return gammelVerdi;
     }
 
