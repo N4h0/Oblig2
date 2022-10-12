@@ -215,8 +215,46 @@ public class DobbeltLenketListe<T> implements Liste<T> { //....
     }
 
     @Override
-    public boolean fjern(T verdi) {
-        throw new UnsupportedOperationException();
+    public boolean fjern(T verdi)  {
+
+
+        Node<T> q = hode;               // hjelpepekere
+
+
+        while (q != null)                         // q skal finne verdien t
+        {
+            if (q.verdi.equals(verdi)) break;       // verdien funnet
+            q = q.neste;                            // Looper gjennom til eg finn q.
+        }
+
+        if (q == null) return false;              // fant ikke verdi
+
+        // System.out.println(q.verdi); Denne printlinja viser at rett verdiar blir fjerna (ved å samanlikne med test).
+        if (antall == 1){
+            hode = hale = null;
+            antall --;
+            return true;
+        }
+            if (q == hode) {
+            System.out.println(hode.verdi);
+            hode = hode.neste;
+            System.out.println(hode.verdi);
+            hode.forrige = null;
+            if (antall == 1) hale = null;
+            antall --;
+            return true;
+        } else if (q == hale) { //Fjerne siste verdi
+            hale = hale.forrige;
+            hale.neste = null;
+            antall --;
+            return true;
+        } else { //Alle andre verdiar
+            Node<T> p = q.forrige;  // Noden før p.
+            p.neste = q.neste;  // Koblin frå q til til noden etter.
+            q.neste.forrige = p; //Samme med noden etter p, men går før.
+            antall --;
+            return true;
+        }
     }
 
     @Override
@@ -225,7 +263,6 @@ public class DobbeltLenketListe<T> implements Liste<T> { //....
 
         T temp;
 
-        System.out.println(omvendtString());
         if (indeks == 0) {  //Fjerne fyrste verdi
             temp = hode.verdi;
             hode = hode.neste;
