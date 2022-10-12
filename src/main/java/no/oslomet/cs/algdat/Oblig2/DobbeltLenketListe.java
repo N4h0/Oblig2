@@ -236,9 +236,9 @@ public class DobbeltLenketListe<T> implements Liste<T> { //....
             return true;
         }
             if (q == hode) {
-            System.out.println(hode.verdi);
+            // System.out.println(hode.verdi);
             hode = hode.neste;
-            System.out.println(hode.verdi);
+            // System.out.println(hode.verdi);
             hode.forrige = null;
             if (antall == 1) hale = null;
             antall --;
@@ -250,7 +250,7 @@ public class DobbeltLenketListe<T> implements Liste<T> { //....
             return true;
         } else { //Alle andre verdiar
             Node<T> p = q.forrige;  // Noden før p.
-            p.neste = q.neste;  // Koblin frå q til til noden etter.
+            p.neste = q.neste;  // Kobling frå q til til noden etter.
             q.neste.forrige = p; //Samme med noden etter p, men går før.
             antall --;
             return true;
@@ -269,6 +269,7 @@ public class DobbeltLenketListe<T> implements Liste<T> { //....
             hode.forrige.neste = null;
             hode.forrige = null;
             if (antall == 1) hale = null;
+
         } else if (indeks == antall - 1) { //Fjerne siste verdi
             temp = hale.verdi;
             hale = hale.forrige;
@@ -391,6 +392,5 @@ public class DobbeltLenketListe<T> implements Liste<T> { //....
     public static <T> void sorter(Liste<T> liste, Comparator<? super T> c) {
         throw new UnsupportedOperationException();
     }
-
 
 } // class DobbeltLenketListe
