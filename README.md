@@ -25,4 +25,9 @@ blir sjekka ved bruk av antall-veriabelen og to if-testar med fleire or-operator
 unntak som er lagt til i metodar som blir brukt. Ellers er oppgåva berre å bruker alt ferdiglagde metodar.
 
 * Oppg 5: Løyste oppgåve ved å lage midlertidige noder for å endre neste og forrige-peikerane og å bruke leggtil-metoden eg hadde frå før.
-Følgefeil frå finnNodeMetoden tok opp mykje tid å finne her.
+__________
+
+* Oppg 6:
+
+* Oppg 8: Oppg 8 var berre å gjere som instruksjonane sa. 
+
