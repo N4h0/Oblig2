@@ -15,7 +15,7 @@ public class DobbeltLenketListe<T> implements Liste<T> { //....
      * @param <T>
      */
 
-    public static void main(String[] args) {
+    public static void main(String[] args) {  //for å teste ting.
         DobbeltLenketListe<String> liste = new DobbeltLenketListe<>();
         liste = new DobbeltLenketListe<>(new String[]{"A", "B", "C", "D", "E", "F", "G"});
         liste.fjern("7");
