@@ -15,10 +15,13 @@ public class DobbeltLenketListe<T> implements Liste<T> { //....
      * @param <T>
      */
 
-    /*public static void main(String[] args) {
-// System.out.println(liste.subliste(0,11)); // skal kaste unntak
+    public static void main(String[] args) {
+        DobbeltLenketListe<String> liste = new DobbeltLenketListe<>();
+        liste = new DobbeltLenketListe<>(new String[]{"A", "B", "C", "D", "E", "F", "G"});
+        liste.fjern("7");
+        System.out.println(liste.toString());
     }
-*/
+
     private static final class Node<T> {
         private T verdi;                   // nodens verdi
         private Node<T> forrige, neste;    // pekere
@@ -215,52 +218,47 @@ public class DobbeltLenketListe<T> implements Liste<T> { //....
     }
 
     @Override
-    public boolean fjern(T verdi)  {
+    public boolean fjern(T verdi) {
 
+        Node<T> q = hode, p = null;               // hjelpepekere
 
-        Node<T> q = hode;               // hjelpepekere
-
+        if (q == null) return false;              // fann ikkje verdi
 
         while (q != null)                         // q skal finne verdien t
         {
             if (q.verdi.equals(verdi)) break;       // verdien funnet
-            q = q.neste;                            // Looper gjennom til eg finn q.
+            p = q;
+            q = q.neste;
         }
 
-        if (q == null) return false;              // fant ikke verdi
 
         // System.out.println(q.verdi); Denne printlinja viser at rett verdiar blir fjerna (ved å samanlikne med test).
-        if (antall == 1){
+        if (antall == 1) {
             hode = hale = null;
-            antall --;
-            return true;
+            antall--;
         }
-            if (q == hode) {
-            // System.out.println(hode.verdi);
+        if (q == hode) {
             hode = hode.neste;
-            // System.out.println(hode.verdi);
             hode.forrige = null;
-            if (antall == 1) hale = null;
-            antall --;
             return true;
+        } else if (antall == 1) {
+            hale = null;
+            antall--;
         } else if (q == hale) { //Fjerne siste verdi
             hale = hale.forrige;
             hale.neste = null;
-            antall --;
-            return true;
+            antall--;
         } else { //Alle andre verdiar
-            Node<T> p = q.forrige;  // Noden før p.
-            p.neste = q.neste;  // Kobling frå q til til noden etter.
-            q.neste.forrige = p; //Samme med noden etter p, men går før.
-            antall --;
-            return true;
+            p.neste = q.neste;
+            p.forrige = p;
+            antall--;
         }
+        return true;
     }
 
     @Override
     public T fjern(int indeks) {
         indeksKontroll(indeks, false);  // Kontroll
-
         T temp;
 
         if (indeks == 0) {  //Fjerne fyrste verdi
@@ -269,7 +267,6 @@ public class DobbeltLenketListe<T> implements Liste<T> { //....
             hode.forrige.neste = null;
             hode.forrige = null;
             if (antall == 1) hale = null;
-
         } else if (indeks == antall - 1) { //Fjerne siste verdi
             temp = hale.verdi;
             hale = hale.forrige;
