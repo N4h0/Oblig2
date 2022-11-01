@@ -19,7 +19,7 @@ public class DobbeltLenketListe<T> implements Liste<T> { //....
         DobbeltLenketListe<String> liste = new DobbeltLenketListe<>();
         liste = new DobbeltLenketListe<>(new String[]{"A", "B", "C", "D", "E", "F", "G"});
         liste.fjern("7");
-        System.out.println(liste.toString());
+        System.out.println(liste.toString());  //test
     }
 
     private static final class Node<T> {
