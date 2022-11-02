@@ -15,10 +15,9 @@ public class DobbeltLenketListe<T> implements Liste<T> { //....
      * @param <T>
      */
 
-/*    public static void main(String[] args) {  //for å teste ting.
-    }
 
-*/
+
+
     private static final class Node<T> {
         private T verdi;                   // nodens verdi
         private Node<T> forrige, neste;    // pekereØ
@@ -277,6 +276,7 @@ public class DobbeltLenketListe<T> implements Liste<T> { //....
         while (p != null) {
             if (p.neste != null) q = p.neste;
             p.neste = p.forrige = p = null;
+            endringer --;
         }
         antall = 0;
     }
@@ -368,9 +368,11 @@ public class DobbeltLenketListe<T> implements Liste<T> { //....
             if (!hasNext()) throw new NoSuchElementException();  //Korter ned if-setningen :D
 
             fjernOK = true;
-            T temp = denne.verdi;
+
+            T returverdi = denne.verdi;
             denne = denne.neste;
-            return temp;
+
+            return returverdi;
         }
 
         @Override

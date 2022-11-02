@@ -1152,6 +1152,7 @@ class Oblig2Test {
         i = liste.iterator(3);
         for (; i.hasNext(); ) {
             if (i.next() != m) {
+                System.out.println(i.next() + " " + m);
                 antallFeil++;
                 System.out.println("Oppgave 8w: Feil i metoden next()!");
             }
