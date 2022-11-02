@@ -770,15 +770,10 @@ class Oblig2Test {
             System.out.println("Oppgave 6m: Feil i metoden fjern(T)!");
         }
 
-        System.out.println("hei");
-        System.out.println(liste.omvendtString().equals("[H, E, C]"));
-
         if (!liste.omvendtString().equals("[H, E, C]")) {
             antallFeil++;
             System.out.println("Oppgave 6n: Feil i metoden fjern(T)!");
         }
-
-        System.out.println("hallo");
 
         liste.fjern("H");
         liste.fjern("C");
