@@ -30,11 +30,6 @@ Hovudutfordringa med oppgåva er å legge ein node mellom to andre nodear. Ved �
 når eg legg til neste og forrige-peikarar går det fint.
 
 * Oppg 6: Jobba utifrå koden frå kompendiet, men må halde tunga rett i munne for å ha oversikt over alle neste og forrige.verdiar.
-Velger å lage tre ulike utfall, for verdi som er fyrst, sist og midt i noden. 
+Velger å lage tre ulike utfall, for verdi som er fyrst, sist og midt i noden. Oppgåva gjekk greit når eg fyrst fekk fiksa peikarane. 
 
-I oppgåve 6 klarte eg ikkje å fjerne feilmelding frå test 6u, då eg fekk tidsmangel. Var i tillegg ei felmelding som kom frå 
-toString ved forsøk på å lese ein verdi som var null, som eg heller ikkje fekk has på.
-
-* Oppg 8: Oppg 8 følgde eg instruksane stegvis. 
-Oppgåve 8 får feil frå oppgåve 7, sidan Nullstill ikkje er koda då det ikkje er ein del av oppgåvene for grupper på 1 person. I tillegg rakk eg heller ikkje å få fiksa feilmelding 8k.
-
+* Oppg 8: Oppg 8 følgde eg instruksane stegvis som oppgitt og brukte kompendiet til hjelp. I tillegg gjorde eg oppgåve 7 slik at oppgåva ikkje skulle gi feilmeldingar.
