@@ -336,8 +336,8 @@ public class DobbeltLenketListe<T> implements Liste<T> { //....
     }
 
     public Iterator<T> iterator(int indeks) {
-        indeksKontroll(indeks, false);
-        return new DobbeltLenketListeIterator();
+        indeksKontroll(indeks, false); //sjekker om indeks er lovlig ved bruk av indekskontroll
+        return new DobbeltLenketListeIterator(indeks);
     }
 
     private class DobbeltLenketListeIterator implements Iterator<T> {
@@ -365,7 +365,7 @@ public class DobbeltLenketListe<T> implements Liste<T> { //....
         @Override
         public T next() {
             if (iteratorendringer != endringer) throw new ConcurrentModificationException();
-            if (!hasNext()) throw new NoSuchElementException();  //Korter ned if-setningen :D
+            if (!hasNext()) throw new NoSuchElementException();  //slepp if-setning lenger nede :D
 
             fjernOK = true;
 
