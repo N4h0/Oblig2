@@ -303,7 +303,7 @@ public class DobbeltLenketListe<T> implements Liste<T> { //....
     public String omvendtString() {
         StringBuilder s = new StringBuilder();
         s.append('[');
-//hei
+//heisa
 
 
 
