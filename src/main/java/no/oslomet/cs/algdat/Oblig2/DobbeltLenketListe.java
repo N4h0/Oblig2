@@ -94,7 +94,7 @@ public class DobbeltLenketListe<T> implements Liste<T> { //....
         }
         return liste;
     }
-
+//testest
     private void fratilKontroll(int fra, int til) {
         if (fra < 0 || til < 0 || til > antall) throw new IndexOutOfBoundsException();
         if (fra > til) throw new IllegalArgumentException();
