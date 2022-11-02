@@ -15,13 +15,16 @@ public class DobbeltLenketListe<T> implements Liste<T> { //....
      * @param <T>
      */
 
-/*    public static void main(String[] args) {  //for å teste ting.
+    public static void main(String[] args) {  //for å teste ting.
+        DobbeltLenketListe<String> liste = new DobbeltLenketListe<>();
+        liste = new DobbeltLenketListe<>(new String[]{"A", "B", "C", "D", "E", "F", "G"});
+        liste.fjern("7");
+        System.out.println(liste.toString());  //test
     }
 
-*/
     private static final class Node<T> {
         private T verdi;                   // nodens verdi
-        private Node<T> forrige, neste;    // pekereØ
+        private Node<T> forrige, neste;    // pekere
 
         private Node(T verdi, Node<T> forrige, Object o) {
             this.verdi = verdi;
@@ -136,7 +139,9 @@ public class DobbeltLenketListe<T> implements Liste<T> { //....
     @Override
     public void leggInn(int indeks, T verdi) {
 
-
+        /*System.out.println(verdi.toString() + " " + antall + " " + indeks);
+        System.out.println(toString());
+*/
         indeksKontroll(indeks, true);
         Objects.requireNonNull(verdi, "Nullverdiar er ikkje tillatt"); //Sjekker at verdi ikkje er null.
 
@@ -161,7 +166,7 @@ public class DobbeltLenketListe<T> implements Liste<T> { //....
             antall++;
             endringer++;
         }
-
+        // System.out.println(toString() + antall); Eg må diverre kommentere ut denne utskriften, den gjorde ein god jobb :'(
     }
 
     @Override
@@ -214,7 +219,10 @@ public class DobbeltLenketListe<T> implements Liste<T> { //....
 
     @Override
     public boolean fjern(T verdi) {
+
         Node<T> q = hode, p = null;               // hjelpepekere
+
+        if (q == null) return false;              // fann ikkje verdi
 
         while (q != null)                         // q skal finne verdien t
         {
@@ -223,37 +231,42 @@ public class DobbeltLenketListe<T> implements Liste<T> { //....
             q = q.neste;
         }
 
-        if (q == null) return false;              // fann ikkje verdi
-        else if (antall == 1) hale = hode = null;
-        else if (q == hode) {
+
+        // System.out.println(q.verdi); Denne printlinja viser at rett verdiar blir fjerna (ved å samanlikne med test).
+        if (antall == 1) {
+            hode = hale = null;
+            antall--;
+        }
+        if (q == hode) {
             hode = hode.neste;
             hode.forrige = null;
+            return true;
+        } else if (antall == 1) {
+            hale = null;
+            antall--;
         } else if (q == hale) { //Fjerne siste verdi
             hale = hale.forrige;
             hale.neste = null;
+            antall--;
         } else { //Alle andre verdiar
             p.neste = q.neste;
-            q.neste.forrige = p;
+            p.forrige = p;
+            antall--;
         }
-        endringer++;
-        antall--;
-
         return true;
     }
 
     @Override
     public T fjern(int indeks) {
         indeksKontroll(indeks, false);  // Kontroll
+        T temp;
 
-        T temp = null;
-        if (antall == 1) hale = hode = null;
-        else if (indeks == 0) {  //Fjerne fyrste verdi
+        if (indeks == 0) {  //Fjerne fyrste verdi
             temp = hode.verdi;
             hode = hode.neste;
             hode.forrige.neste = null;
             hode.forrige = null;
-        } else if (antall == 1) {
-            hale = null;
+            if (antall == 1) hale = null;
         } else if (indeks == antall - 1) { //Fjerne siste verdi
             temp = hale.verdi;
             hale = hale.forrige;
@@ -303,15 +316,12 @@ public class DobbeltLenketListe<T> implements Liste<T> { //....
     public String omvendtString() {
         StringBuilder s = new StringBuilder();
         s.append('[');
-//heisa
-
-
 
         if (!tom()) { //Hvis den dobbeltlenkalista ikke er tom (spesifisert av listeinterfase) skjer følgande:
-            Node<T> p = hale;  //Sett peikar til halen.
+            Node<T> p = hale;  //Sett peikar til hodet.
             s.append(p.verdi); //Legg til verdien til hovudet.
 
-            p = p.forrige; //Flytter så peikar til forrige.
+            p = p.forrige; //Flytter så peikar til neste.
 
             while (p != null)  // Fortsetter fram til enden av lista (altså der p-neste = hale.neste = 0.
             {
